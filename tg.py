@@ -62,3 +62,38 @@ async def ask_age(message: types.Message):
     user_data[user_id]['phone'] = phone
     await message.answer("Iltimos yoshingizni kiriting: ")
     print(user_data)
+
+async def total_info(message: types.Message):
+    user_id = message.from_user.id
+    age = message.text
+    user_data[user_id]['age'] = age
+    button = [
+        [types.KeyboardButton(text="Zayavka qoldirish")]
+    ]
+    keyboard = types.ReplyKeyboardMarkup(keyboard=button, resize_keyboard=True)
+    name = user_data[user_id]['name']
+    phone = user_data[user_id]['phone']
+    message_text = (f"Ismingiz: {name}\n"
+                    f"Yoshingiz: {age}\n"
+                    f"Telefon raqamingiz: {phone}")
+    save_info(user_id,name,phone,age)
+    await message.answer(f"Zayavkangiz qabul qilindi\n{message_text}", reply_markup=keyboard)
+    await bot.send_message(ChannelName, message_text)
+    print(user_data)
+    del user_data[user_id]
+    print(user_data)
+
+
+
+
+
+
+
+async  def main():                    
+    await dp.start_polling(bot)   
+
+print('The bot is running')            
+asyncio.run(main())                    
+
+
+
