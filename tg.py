@@ -52,4 +52,13 @@ async  def ask_phone(message: types.Message):
     print(user_data) 
 
 
+async def ask_age(message: types.Message):
+    user_id = message.from_user.id
+    if message.contact is not None:
+        phone = message.contact.phone_number
 
+    else:
+        phone = message.text
+    user_data[user_id]['phone'] = phone
+    await message.answer("Iltimos yoshingizni kiriting: ")
+    print(user_data)
